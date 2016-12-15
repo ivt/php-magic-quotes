@@ -75,7 +75,7 @@ final class MagicQuotes {
             return $add ? \addslashes($x) : \stripslashes($x);
         }
         if (\is_array($x)) {
-            $ret = [];
+            $ret = array();
             foreach ($x as $k => $v) {
                 $k = self::modify($k, $add);
                 $v = self::modify($v, $add);
