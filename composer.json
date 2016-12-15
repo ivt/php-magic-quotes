@@ -1,0 +1,6 @@
+{
+    "name": "ivt/php-magic-quotes",
+    "autoload": {
+        "classmap": [""]
+    }
+}
