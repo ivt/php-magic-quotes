@@ -26,23 +26,24 @@ final class MagicQuotes {
 
     /**
      * Set whether magic quotes are enabled. The global variables are updated to reflect the new setting.
-     * @param bool $enabled
-     * @return void
+     * @param bool $enabled Whether magic quotes should be enabled.
+     * @return bool The previous setting.
      * @throws \Exception
      */
     public static function set($enabled) {
         if (!\is_bool($enabled)) {
             throw new \Exception('Expected a bool');
         }
-        if (self::get() == $enabled) {
-            return;
+        $previous = self::get();
+        if ($previous != $enabled) {
+            $_GET = self::modify($_GET, $enabled);
+            $_POST = self::modify($_POST, $enabled);
+            $_COOKIE = self::modify($_COOKIE, $enabled);
+            $_REQUEST = self::modify($_REQUEST, $enabled);
+            $_FILES = self::modify($_FILES, $enabled);
+            self::$enabled = $enabled;
         }
-        $_GET = self::modify($_GET, $enabled);
-        $_POST = self::modify($_POST, $enabled);
-        $_COOKIE = self::modify($_COOKIE, $enabled);
-        $_REQUEST = self::modify($_REQUEST, $enabled);
-        $_FILES = self::modify($_FILES, $enabled);
-        self::$enabled = $enabled;
+        return $previous;
     }
 
     /**
